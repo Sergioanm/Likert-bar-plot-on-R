@@ -1,0 +1,6 @@
+#Des = the filtered database
+dot<-data.frame(Des)
+
+#cbind creates a new frame for the mutivariance analysis by a specific category
+mad1<-manova(cbind(Q1,Q2,S1,S2)~educ,data=dot)
+summary(mad1, intercept = TRUE)
