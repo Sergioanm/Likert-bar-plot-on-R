@@ -1,0 +1,36 @@
+#data fit
+#The first and most important thing when carrying out any analysis with Likert items is to know the data.
+
+#Make sure to filter and fit the database to the parameters of this code.
+
+#data 
+#Des is the filtered dataset
+#[ , 2:5] Helps to join the columns according to the size of the data set. Starting in the second column and ending in the last.
+#[ , 2:5] the function replaces the numerical values with categories that each researcher decides
+
+Des[ , 2:5] <- lapply(Des[ , 2:5], function(x){ factor(x, 
+                                                           levels = c("1", "2", "3", "4", "5"),                                  
+                                                           labels = c("Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"))})
+
+
+install.packages("likert")
+library(likert)
+
+#create an object that has the result of the function contained in a frame
+
+lik <- likert(as.data.frame(Des[ , 2:5]))
+
+#create the basic likert bar plot
+
+plot(lik, wrap = 60, text.size=3) + theme(axis.text.y = element_text(size="10")) 
+
+#alternative for heatmaps
+
+plot(lik, type = "heat", wrap = 60, text.size=3) + theme(axis.text.y = element_text( size="5"))
+
+#group by categories
+lik2 <- likert(as.data.frame(Des[ , 2:5]), grouping = Des$educ)
+
+plot(lik2, wrap = 60, text.size=3) + theme(axis.text.y = element_text(size="10"))
+plot(lik2, include.histogram = TRUE)
+plot(lik2, type = "density")
